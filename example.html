@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="example.css">
+        <script src="jquery.js"></script> 
+        <script src="example.js"></script>
+        <!--<script src="canvas.js"></script>-->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.1/p5.js"></script>
+        <title>Custom Slider</title>
+    </head>
+    <body onload = "currentSlide(1)">
+        <div class="topPage">
+    
+            <div class="navigatingBoutons">    
+                
+                    <a class="active" href='index.html' >
+                        Home
+                    </a>
+                    <a href="example.html">
+                        Example
+                    </a>
+        
+                    <a href="game.html">
+                        Game
+                    </a>
+                
+            </div>
+        
+            <h1 >Simplex Range Searching</h1>
+            
+        </div>
+        <div class="slide-container">
+            <div class="custom-slider fade">
+                <div class="slide-index">1 / 9</div>
+                <img class="slide-img" src="image/image1.png">
+                <div class="slide-text">We have a set of points S.</div>
+            </div>
+            <div class="custom-slider fade">
+                <div class="slide-index">2 / 9</div>
+                <img class="slide-img" src="image/image2.png">
+                <img class="slide-img" src="image/tree1.png">
+                <div class="slide-text">We split it into 4 spaces with 2 lines. We can see the resulting tree on the right. </div>
+            </div>
+            <div class="custom-slider fade">
+                <div class="slide-index">3 / 9</div>
+                <img class="slide-img" src="image/image3.png">
+                <div class="slide-text">We perform the same move recursively while some nodes are not leafs (ie contain more than one point).</div>
+            </div>
+            <div class="custom-slider fade">
+                <div class="slide-index">4 / 9</div>
+                <img class="slide-img" src="image/image4.png">
+                <img class="slide-img" src="image/tree2.png">
+            </div>
+            <div class="custom-slider fade">
+                <div class="slide-index">5 / 9</div>
+                <img class="slide-img" src="image/image5.png">
+            </div>
+            <div class="custom-slider fade">
+                <div class="slide-index">6 / 9</div>
+                <img class="slide-img" src="image/image6.png">
+            </div>
+            <div class="custom-slider fade">
+                <div class="slide-index">7 / 9</div>
+                <img class="slide-img" src="image/image7.png">
+                <div class="slide-text">There are no more nodes to recurse in. So we return to the root and continue recursing on the others branches if necessary.</div>
+            </div>
+            <div class="custom-slider fade">
+                <div class="slide-index">8 / 9</div>
+                <img class="slide-img" src="image/image8.png">
+            </div>
+            <div class="custom-slider fade">
+                <div class="slide-index">9 / 9</div>
+                <img class="slide-img" src="image/image9.png">
+                <div class="slide-text">Finally we obtain this partition tree.</div>
+            </div>
+            
+        </div>
+        <div>
+            <a class="prev" onclick="plusSlides(-1)">❮</a>
+        </div>
+        <div>
+            <a class="next" onclick="plusSlides(1)">❯</a>
+        </div>
+        <br>
+        <div class="slide-dot">
+            <span class="dot" onclick="currentSlide(1)"></span>
+            <span class="dot" onclick="currentSlide(2)"></span>
+            <span class="dot" onclick="currentSlide(3)"></span>
+            <span class="dot" onclick="currentSlide(4)"></span>
+            <span class="dot" onclick="currentSlide(5)"></span>
+            <span class="dot" onclick="currentSlide(6)"></span>
+            <span class="dot" onclick="currentSlide(7)"></span>
+            <span class="dot" onclick="currentSlide(8)"></span>
+            <span class="dot" onclick="currentSlide(9)"></span>
+        </div>
+    </body>
+</html>
