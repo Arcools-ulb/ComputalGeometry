@@ -31,42 +31,42 @@
         </div>
         <div class="slide-container">
             <div class="custom-slider fade">
-                <div class="slide-index">1 / 9</div>
+                <div class="slide-index">1 / 17</div>
                 <img class="slide-img" src="image/image1.png">
                 <h3>Actual tree :</h3>
                 <img class="slide-img" src="image/tree1.png">
                 <div class="slide-text">We have a set of points S.</div>
             </div>
             <div class="custom-slider fade">
-                <div class="slide-index">2 / 9</div>
+                <div class="slide-index">2 / 17</div>
                 <img class="slide-img" src="image/image2.png">
                 <h3>Actual tree :</h3>
                 <img class="slide-img" src="image/tree2.png">
                 <div class="slide-text">We split it into 4 spaces with 2 lines. We can see the resulting tree on the right. </div>
             </div>
             <div class="custom-slider fade">
-                <div class="slide-index">3 / 9</div>
+                <div class="slide-index">3 / 17</div>
                 <img class="slide-img" src="image/image3.png">
                 <div class="slide-text">We perform the same move recursively while some nodes are not leafs (ie contain more than one point).</div>
             </div>
             <div class="custom-slider fade">
-                <div class="slide-index">4 / 9</div>
+                <div class="slide-index">4 / 17</div>
                 <img class="slide-img" src="image/image4.png">
                 <h3>Actual tree :</h3>
                 <img class="slide-img" src="image/tree3.png">
             </div>
             <div class="custom-slider fade">
-                <div class="slide-index">5 / 9</div>
+                <div class="slide-index">5 / 17</div>
                 <img class="slide-img" src="image/image5.png">
             </div>
             <div class="custom-slider fade">
-                <div class="slide-index">6 / 9</div>
+                <div class="slide-index">6 / 17</div>
                 <img class="slide-img" src="image/image6.png">
                 <h3>Actual tree :</h3>
                 <img class="slide-img" src="image/tree4.png">
             </div>
             <div class="custom-slider fade">
-                <div class="slide-index">7 / 9</div>
+                <div class="slide-index">7 / 17</div>
                 <img class="slide-img" src="image/image7.png">
                 <div class="slide-text">
                     <p>There are no more nodes to recurse on this sub-space. 
@@ -75,18 +75,68 @@
                     </p></div>
             </div>
             <div class="custom-slider fade">
-                <div class="slide-index">8 / 9</div>
+                <div class="slide-index">8 / 17</div>
                 <img class="slide-img" src="image/image8.png">
                 <h3>Actual tree :</h3>
                 <img class="slide-img" src="image/tree5.png">
                 <p>Yes ! it is that !</p>
             </div>
             <div class="custom-slider fade">
-                <div class="slide-index">9 / 9</div>
+                <div class="slide-index">9 / 17</div>
                 <img class="slide-img" src="image/image9.png">
                 <h3>Final tree :</h3>
                 <img class="slide-img" src="image/tree6.png">
                 <div class="slide-text">Finally we obtain this partition tree.</div>
+            </div>
+            <div class="custom-slider fade">
+                <div class="slide-index">10 / 17</div>
+                <img class="slide-img" src="image/triangle1.png">
+                <div class="slide-text">Let see a example with this triangle !</div>
+            </div>
+            <div class="custom-slider fade">
+                <div class="slide-index">11 / 17</div>
+                <img class="slide-img" src="image/triangle2.png">
+                <div class="slide-text">Let focus on a subspace</div>
+            </div>
+            <div class="custom-slider fade">
+                <div class="slide-index">12 / 17</div>
+                <img class="slide-img" src="image/triangle3.png">
+                <div class="slide-text">UpLeft space has a points, we have to recurse. 
+                    We look at intersection. It intersect left line, so we have to recurse only on the downLeft spaces
+                    because UpLeft was alrady recurse.
+                    UpRight and DownRight are not crossed. How do we determine if the spaces are inside or outside ?
+                    We look at the intersection of the 2 splitting lines(I1 here). If this point is inside the triangle,
+                    the uncrossed spaces are in otherwise they are out. Take time to think about it.
+                </div>
+            </div>
+            <div class="custom-slider fade">
+                <div class="slide-index">13 / 17</div>
+                <img class="slide-img" src="image/triangle4.png">
+                <div class="slide-text">We will recurse on space(green box). 
+                    However this space contain only 1 points, we don't have choice, 
+                    we have to compute the points to know if it is inside or ouside the triangle.</div>
+            </div>
+            <div class="custom-slider fade">
+                <div class="slide-index">14 / 17</div>
+                <img class="slide-img" src="image/triangle5.png">
+                <div class="slide-text"> We focus the green box</div>
+            </div>
+            <div class="custom-slider fade">
+                <div class="slide-index">15 / 17</div>
+                <img class="slide-img" src="image/triangle6.png">
+                <div class="slide-text">You to play ! guess what algorithm will do.</div>
+            </div>
+            <div class="custom-slider fade">
+                <div class="slide-index">16 / 17</div>
+                <img class="slide-img" src="image/triangle7.png">
+                <div class="slide-text">Yes ! There is no triangle point. We look at intersections et recurse.
+                    2 spaces are not crossed so we look at I3. It is inside the triangle. 
+                    Thus the upLeft downLeft will not be recursed and can be directly count.</div>
+            </div>
+            <div class="custom-slider fade">
+                <div class="slide-index">17 / 17</div>
+                <img class="slide-img" src="image/triangle8.png">
+                <div class="slide-text">Finally green points should be counted.</div>
             </div>
             
         </div>
@@ -107,6 +157,14 @@
             <span class="dot" onclick="currentSlide(7)"></span>
             <span class="dot" onclick="currentSlide(8)"></span>
             <span class="dot" onclick="currentSlide(9)"></span>
+            <span class="dot" onclick="currentSlide(10)"></span>
+            <span class="dot" onclick="currentSlide(11)"></span>
+            <span class="dot" onclick="currentSlide(12)"></span>
+            <span class="dot" onclick="currentSlide(13)"></span>
+            <span class="dot" onclick="currentSlide(14)"></span>
+            <span class="dot" onclick="currentSlide(15)"></span>
+            <span class="dot" onclick="currentSlide(16)"></span>
+            <span class="dot" onclick="currentSlide(17)"></span>
         </div>
     </body>
 </html>

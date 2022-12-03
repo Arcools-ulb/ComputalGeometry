@@ -83,12 +83,12 @@
              
         <h3>Why do we need those characteristics ?</h3>
         <p>Now, we have the main idea, we show 2 images explaining why the characteristics defined above are important</p>
-        <img class="image" src="image/image1.png">
+        <img class="image" src="image/chara1.png">
         <p>
             How we saw above, we want that some subset don't need to be compute. 
             Here, in most case, when we draw a line, the line cross all the subset. 
             So there is no subset where there is no need a work such that we can say directly if it's inside or outside</p>
-        <img class="image" src="image/image2.png">
+        <img class="image" src="image/chara2.png">
         <p>Now the majority of lines cross only the blue part. 
             Even if we reduce the computation of 2. Big part of points are still in the determine face.
             What we want is that the number of points not calculated was not governed by randomness.
@@ -150,31 +150,9 @@
             But we need to add a case when a sub-space is crossed by 2 lines, 
             that's why we have the + k and k is egual to the number of sub-spaces on the same level.</p>
         <h2>Example :</h2>
-        <p>We have a set of points S</p>
-        <img class="image" src="image/image5.png">
-
-        <p> We split it into 4 spaces with 2 lines. We can see the resulting tree on the right. </p>  
-        <img class="image" src="image/image6.png">
-        <img class="imagetree" src="image/tree1.png">
-        <p>We perform the same move recusrsively, focusing on the green rectangle.</p>
-        <img class="image" src="image/image3.png">
-        <p>Again we find our 2 cutting lines and should get this resulting tree.</p>
-        <img class="image" src="image/image4.png">
-        <img class="imagetree" src="image/tree2.png">
-        <p>So on, in each subspace until our points are sorted. We should get the following partition tree: </p>
-        <img id="imagetree3" src="image/tree3.png">
-        <p>Now we have our partition tree builded. 
-            We can start the querying. However, as said above, we want to do it with triangles instead of half-planes.
-            It is exactly the same algorithm with just a little adapt to see the cutting of subspaces with triangles</p>
-        <p>There is a example with 1 triangle.</p>
-        <img class="image" src="image/image7.png">
-        <p>We want to know how many points are inside this triangle. As explained above, we need to see which spaces are touched by the triangle.
-             And recusively we do it again until we step on a leaf and compute if needed. 
-            If we are lucky some parts are not crossed and we not need to compute it. We just need to see if the space is inside or outside.</p>
-        <p>Now let take the space top-right as the last time:</p>
-        <img class="image" src="image/image8.png">
-        <p>Again we are lucky, not need to compute the 2 right parts. The 2 left parts need to be recursively look at. But that are leafs, so we just need to look if it is inside or outside. 
-            So on until all spaces has been computed and the number of points inside is found.</p>
+        If you want a example, let look on this <a href="example.html">
+            page
+        </a>
         <h2>Bibliographie :</h2>
         <p>Agarwal, Pankaj K. “Simplex Range Searching and Its Variants: A Review.” A Journey Through Discrete Mathematics. Cham: Springer International Publishing, 2017. 1–30. Web.</p>
         <p>D. E. Willard, Polygon retrieval, SIAM J. Comput., 11 (1982), 149–165.</p>
