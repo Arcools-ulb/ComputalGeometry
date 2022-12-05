@@ -1,12 +1,12 @@
 .topPage{
     border: blue;
     text-align: center;
-    color:black
+    color:rgb(0, 0, 0)
 } 
 
 body {
     /*background-color: white;*/
-    background-color: rgba(100, 98, 95, 0.404);
+    background-color: rgba(255, 255, 255, 0.404);
     color:black;
     text-align: center;
 }
@@ -18,6 +18,9 @@ body {
 }
 
 h2{
+    background-color: rgba(148, 177, 240, 0.705);
+}
+h3{
     background-color: rgba(148, 177, 240, 0.705);
 }
 
@@ -49,7 +52,7 @@ img{
 
 .navigatingBoutons{
     margin: 0;
-    background-color: #333;
+    background-color: rgb(51, 51, 51);
     overflow: hidden;
 }
 
