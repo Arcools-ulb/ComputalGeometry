@@ -75,7 +75,7 @@ class Node {
     this.node.push(node);
   }
   calculateCenterPoints() {
-    return new Point(line1.a.x, line2.b.y);
+    return new Point(line2.a.x, line1.b.y);
   }
 }
 
@@ -228,8 +228,9 @@ function draw() {
   }
   stroke("red");
   for (i in trianglePoints) {
-    ellipse(trianglePoints[i].x, trianglePoints[i].y, 4, 4);
+    ellipse(trianglePoints[i].x, trianglePoints[i].y, 7, 7);
   }
+  stroke("red");
   if(isDrawSolution) {
   for (var j = 0; j < solutionTriangle.length ; j +=1) {
     for(var k = 0; k < solutionTriangle[j].length ; k +=1)
@@ -292,17 +293,16 @@ function find2LineToCutPlane(listPoints) {
     return a.y - b.y;
   });
   //set the 2 cutting lines
-  line1 = new Line(
+  line2 = new Line(
     new Point(cloneX[middle].x + 1, cloneX[middle].y),
     new Point(cloneX[middle].x + 1, cloneX[middle].y - 1)
   );
-  line2 = new Line(
+  line1 = new Line(
     new Point(cloneY[middle].x, cloneY[middle].y + 1),
-    new Point(cloneY[middle].x - 1, cloneY[middle].y + 1)
+    new Point(cloneY[middle].x + 1, cloneY[middle].y + 1)
   );
   return [line1, line2];
 }
-
 
 function treeBuild(listePoints) {
   // sort and build the tree
@@ -360,8 +360,23 @@ function treeBuild(listePoints) {
   return tree;
 }
 
+
+function is2SegmentIntersect(line1, line2){
+  if(orientDet(line1.a,line1.b, line2.a) !== orientDet(line1.a,line1.b, line2.b)){
+    if(orientDet(line2.a,line2.b, line1.a) !== orientDet(line2.a,line2.b, line1.b)){
+      return true;
+  }
+}
+  return false;
+}
+
 function countInHalfplanes(lines, tree, recurInt) {
   //calculate the number of points inside a triangle
+  let inUpLeft;
+  let inUpRight;
+  let inDownLeft;
+  let inDownRight;
+  let centerPoint;
   if (tree === null) {
     return null;
   } else {
@@ -376,35 +391,34 @@ function countInHalfplanes(lines, tree, recurInt) {
           orientDet(lines[2].a, lines[2].b, tree.leaf)
         ) {
           //the point is in the triangle
-          console.log("add a point");
           count += 1;
         }
       }
+      return null;
     } else {
-      let inUpLeft = false;
-      let inUpRight = false;
-      let inDownLeft = false;
-      let inDownRight = false;
-      let centerPoint = tree.calculateCenterPoints();
+      inUpLeft = false;
+      inUpRight = false;
+      inDownLeft = false;
+      inDownRight = false;
+      centerPoint = new Point(tree.line2.a.x, tree.line1.b.y);
       let upLimite = new Point(
         centerPoint.x,
-        centerPoint.y + windowHeight / Math.pow(2, recurInt)
+        100000
       );
       let downLimite = new Point(
         centerPoint.x,
-        centerPoint.y - windowHeight / Math.pow(2, recurInt)
+        -1000
       );
       let leftLimite = new Point(
-        centerPoint.x - windowWidth / Math.pow(2, recurInt),
+        -1000,
         centerPoint.y
       );
       let rightLimite = new Point(
-        centerPoint.x + windowWidth / Math.pow(2, recurInt),
+        100000,
         centerPoint.y
       );
       let list = [upLimite, downLimite, leftLimite, rightLimite];
       lines.forEach((element) => {
-        //if the vertex is in it, we search in this space
         if (orientDet(tree.line1.a, tree.line1.b, element.a)) {
           if (orientDet(tree.line2.a, tree.line2.b, element.a)) {
             if (!inUpLeft) {
@@ -430,84 +444,51 @@ function countInHalfplanes(lines, tree, recurInt) {
             }
           }
         }
-        //if cross a line between two space, explore both space
-        let I = new Point(element.b.x - element.a.x, element.b.y - element.a.y);
 
-        for (let i = 0; i < 4; i++) {
-          let J = new Point(
-            list[i].x - centerPoint.x,
-            list[i].y - centerPoint.y
-          );
-          if (I.x * J.y - I.y * J.x !== 0) {
-            //the lines intersect
-            let m =
-              -(
-                -I.x * element.a.y +
-                I.x * centerPoint.y +
-                I.y * element.a.x -
-                I.y * centerPoint.x
-              ) /
-              (I.x * J.y - I.y * J.x);
-            let k =
-              -(
-                element.a.x * J.y -
-                centerPoint.x * J.y -
-                J.x * element.a.y +
-                J.x * centerPoint.y
-              ) /
-              (I.x * J.y - I.y * J.x);
-            if (0 < m && m < 1 && 0 < k && k < 1) {
-              //the segments intersect
-              switch (i) {
-                case 0: //upLine crossed
-                  if (!inUpLeft) {
-                    countInHalfplanes(lines, tree.node[0], recurInt + 1);
-                    inUpLeft = true;
-                  }
-                  if (!inUpRight) {
-                    countInHalfplanes(lines, tree.node[1], recurInt + 1);
-                    inUpRight = true;
-                  }
-                  break;
-                case 1: //downLine crossed
-                  if (!inDownLeft) {
-                    countInHalfplanes(lines, tree.node[2], recurInt + 1);
-                    inDownLeft = true;
-                  }
-                  if (!inDownRight) {
-                    countInHalfplanes(lines, tree.node[3], recurInt + 1);
-                    inDownRight = true;
-                  }
-                  break;
-                case 2: //leftLine crossed
-                  if (!inUpLeft) {
-                    countInHalfplanes(lines, tree.node[0], recurInt + 1);
-                    inUpLeft = true;
-                  }
-                  if (!inDownLeft) {
-                    countInHalfplanes(lines, tree.node[2], recurInt + 1);
-                    inDownLeft = true;
-                  }
-                  break;
-                case 3: //rightLine crossed
-                  if (!inDownRight) {
-                    countInHalfplanes(lines, tree.node[3], recurInt + 1);
-                    inDownRight = true;
-                  }
-                  if (!inUpRight) {
-                    countInHalfplanes(lines, tree.node[1], recurInt + 1);
-                    inUpRight = true;
-                  }
-                  break;
-                default:
-              }
-            }
+        //if cross a line between two space, explore both space
+        
+        if(is2SegmentIntersect(element, new Line(centerPoint, downLimite))){
+          if (!inUpLeft) {
+            countInHalfplanes(lines, tree.node[0], recurInt + 1);
+            inUpLeft = true;
+          }
+          if (!inUpRight) {
+            countInHalfplanes(lines, tree.node[1], recurInt + 1);
+            inUpRight = true;
+          }
+        }
+        if(is2SegmentIntersect(element, new Line(centerPoint, upLimite))){
+          if (!inDownLeft) {
+            countInHalfplanes(lines, tree.node[2], recurInt + 1);
+            inDownLeft = true;
+          }
+          if (!inDownRight) {
+            countInHalfplanes(lines, tree.node[3], recurInt + 1);
+            inDownRight = true;
+          }
+        }
+        if(is2SegmentIntersect(element, new Line(centerPoint, leftLimite))){
+          if (!inUpLeft) {
+            countInHalfplanes(lines, tree.node[0], recurInt + 1);
+            inUpLeft = true;
+          }
+          if (!inDownLeft) {
+            countInHalfplanes(lines, tree.node[2], recurInt + 1);
+            inDownLeft = true;
+          }
+        }
+        if(is2SegmentIntersect(element, new Line(centerPoint, rightLimite))){
+          if (!inDownRight) {
+            countInHalfplanes(lines, tree.node[3], recurInt + 1);
+            inDownRight = true;
+          }
+          if (!inUpRight) {
+            countInHalfplanes(lines, tree.node[1], recurInt + 1);
+            inUpRight = true;
           }
         }
       });
-
       //we search among the spaces not explored yet if it is because that space is totaly outside or inside the triangle
-      let point;
       if (!inUpLeft && tree.node[0] !== null) {
         if (
           orientDet(lines[0].a, lines[0].b, centerPoint) ===
@@ -552,9 +533,10 @@ function countInHalfplanes(lines, tree, recurInt) {
             //the point is in the triangle
             //so the all space is in the triangle
             count += tree.node[2].numberLeaf;
+
+            inDownLeft = true;
           }
         }
-        inDownLeft = true;
       }
       if (!inDownRight && tree.node[3] !== null) {
         if (
@@ -568,9 +550,10 @@ function countInHalfplanes(lines, tree, recurInt) {
             //the point is in the triangle
             //so the all space is in the triangle
             count += tree.node[3].numberLeaf;
+            inDownRight = true;
           }
         }
-        inDownRight = true;
+        
       }
     }
   }
@@ -587,6 +570,7 @@ function orientDet(A, B, C) {
 var count = 0;
 
 function findSolution() {
+  console.log(tree)
   //find all best possible triangle
   for (i = 0; i < int(trianglePoints.length) - 2; i++) {
     for (j = int(i) + 1; j < int(trianglePoints.length) - 1; j++) {
@@ -601,7 +585,7 @@ function findSolution() {
             ],
             tree,
             1
-          );
+          ); 
           if (count > numberPointsInsideBestTriangle) {
             //found an other possible triangle which contain more points
             solutionTriangle = [
@@ -609,6 +593,7 @@ function findSolution() {
             ];
             numberPointsInsideBestTriangle = count;
           } else if (count === numberPointsInsideBestTriangle) {
+            //if triangles have the same number of points 
             solutionTriangle.push([
               trianglePoints[i],
               trianglePoints[j],
